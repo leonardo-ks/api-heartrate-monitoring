@@ -89,7 +89,7 @@ class DataController extends Controller
 
     public function findData(Request $request)
     {
-        $data = Data::where('user_id', auth()->user()->id)->where('avg_heart_rate', $request->step_changes)->where('today_steps', $request->step_changes);
+        $data = Data::where('avg_heart_rate', $request->step_changes)->where('today_steps', $request->step_changes);
         $labels = [];
         foreach($data->latest()->get() as $res) {
             array_push($labels, $res->label);
