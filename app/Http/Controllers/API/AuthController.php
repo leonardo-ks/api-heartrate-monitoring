@@ -52,7 +52,6 @@ class AuthController extends Controller
             ->json(['success' => true, 'message' => 'Login Success', 'access_token' => $token, 'token_type' => 'Bearer']);
     }
 
-    // method for user logout and delete token
     public function logout(User $user)
     {
         $user->tokens()->delete();
