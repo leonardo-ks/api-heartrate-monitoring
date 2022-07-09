@@ -21,6 +21,11 @@ class DataController extends Controller
         return response()->json(['success' => true, 'message' => 'success', 'data' => DataResource::collection($data)]);
     }
 
+    public function byDate($start, $end){
+        $data = Data::where('user_id', auth()->user()->id)->whereBetween('created_at', [$start, $end])->latest()->get();
+        return response()->json(['success' => true, 'message' => 'success', 'data' => DataResource::collection($data)]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -60,7 +65,7 @@ class DataController extends Controller
 
 
 
-        return response()->json(['success' => true, 'message' => 'data stored', 'data' => new DataResource($data)]);
+        return response()->json(['success' => true, 'message' => 'Data berhasil disimpan', 'data' => new DataResource($data)]);
     }
 
     /**
@@ -89,15 +94,15 @@ class DataController extends Controller
 
     public function findData(Request $request)
     {
-        $data = Data::where('avg_heart_rate', $request->step_changes)->where('today_steps', $request->step_changes);
+        $data = Data::where('avg_heart_rate', $request->step_changes)->where('step_changes', $request->step_changes);
         $labels = [];
         foreach($data->latest()->get() as $res) {
             array_push($labels, $res->label);
         }
         if ($data->count() > 0) {
-            return response()->json(['success' => true, 'found' => true, 'message' => 'Data found', 'labels' => array_unique($labels)]);
+            return response()->json(['success' => true, 'found' => true, 'message' => 'Data ditemukan', 'labels' => array_unique($labels)]);
         } else {
-            return response()->json(['success' => false, 'found' => false, 'message' => 'Data not found']);
+            return response()->json(['success' => false, 'found' => false, 'message' => 'Data tidak ditemukan']);
         }
     }
 
@@ -138,6 +143,6 @@ class DataController extends Controller
     {
         $data->delete();
 
-        return response()->json(['success' => true, 'message' => 'Data deleted']);
+        return response()->json(['success' => true, 'message' => 'Data berhasil dihapus']);
     }
 }

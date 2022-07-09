@@ -56,7 +56,7 @@ class AuthController extends Controller
     {
         $user->tokens()->delete();
 
-        return ['success' => true, 'message' => 'Loged out succesfully'];
+        return ['success' => true, 'message' => 'Berhasil logout'];
     }
 
     public function update(Request $request)
@@ -87,13 +87,43 @@ class AuthController extends Controller
         }
 
         if(!Hash::check($request->old_password, auth()->user()->password)){
-            return response()->json(['success' => false, "message" => "Old password not matched"]);
+            return response()->json(['success' => false, "message" => "Password lama tidak sesuai"]);
         }
 
         User::whereId(auth()->user()->id)->update([
             'password' => Hash::make($request->new_password)
         ]);
 
-        return response()->json(['success' => true, "message" => "Password changed successfully"]);
+        return response()->json(['success' => true, "message" => "Password berhasil diubah"]);
+    }
+
+    public function addContact(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'contact' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+
+        $contacts = auth()->user()->contacts;
+
+        $contact_arr = preg_split("/\,/", $contacts);
+        foreach($contact_arr as $contact) {
+            if ($contact == $request->contact) {
+                return response()->json(['success' => false, "message" => "Kontak sudah didaftarkan"]);
+            }
+        }
+        if ($contacts != null) {
+            $contacts = $contacts . "," . $request->contact;
+        } else {
+            $contacts = $request->contact;
+        }
+
+        User::whereId(auth()->user()->id)->update([
+            'contacts' => $contacts
+        ]);
+
+        return response()->json(['success' => true, "message" => "Kontak berhasil ditambahkan"]);
     }
 }

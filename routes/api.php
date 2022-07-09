@@ -29,12 +29,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
     Route::resource('data', DataController::class);
     Route::get('/average', [DataController::class, 'average']);
+    Route::get('/data/{start}/{end}', [DataController::class, 'byDate']);
     Route::put('/update-user', [AuthController::class, 'update']);
+    Route::post('/add-contact', [AuthController::class, 'addContact']);
     Route::post('/change-password', [AuthController::class, 'updatePassword']);
     Route::post('/find-data', [DataController::class, 'findData']);
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/id', function(Request $request) {
-        return ['success' => true, 'message'=> 'Id retrieved', 'id' => auth()->user()->id,];
-    });
     Route::post('/notification', [NotificationController::class, 'send']);
 });
