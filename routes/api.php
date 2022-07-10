@@ -4,6 +4,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\DataController;
 use App\Http\Controllers\API\NotificationController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +29,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         return ['success' => true, 'message'=> 'Profile retrieved','data' => auth()->user(),];
     });
     Route::resource('data', DataController::class);
+    Route::get('/search/{name}', [AuthController::class, 'search']);
     Route::get('/average', [DataController::class, 'average']);
     Route::get('/data/{start}/{end}', [DataController::class, 'byDate']);
     Route::put('/update-user', [AuthController::class, 'update']);

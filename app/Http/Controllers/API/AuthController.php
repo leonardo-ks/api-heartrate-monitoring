@@ -126,4 +126,9 @@ class AuthController extends Controller
 
         return response()->json(['success' => true, "message" => "Kontak berhasil ditambahkan"]);
     }
+
+    public function search($name) {
+        $user = User::where('name', 'like', '%'.$name.'%')->get();
+        return response()->json(['success' => true, "message" => "Success", "user" => new UserResource($user)]);
+    }
 }
