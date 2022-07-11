@@ -22,8 +22,8 @@ class DataResource extends JsonResource
             'step_changes' => intval($this->step_changes),
             'step' => intval($this->step),
             'label' => $this->label,
-            'created_at' => Carbon::parse($this->created_at)->format('d/m/Y'),
-            'updated_at' => Carbon::parse($this->updated_at)->format('d/m/Y')
+            'created_at' => Carbon::parse($this->created_at),
+            'updated_at' => Carbon::parse($this->updated_at)
         ];
     }
 }
