@@ -36,6 +36,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/contact', [AuthController::class, 'getContactList']);
     Route::put('/update-user', [AuthController::class, 'update']);
     Route::post('/add-contact', [AuthController::class, 'addContact']);
+    Route::post('/delete-contact', [AuthController::class, 'deleteContact']);
     Route::post('/change-password', [AuthController::class, 'updatePassword']);
     Route::post('/find-data', [DataController::class, 'findData']);
     Route::post('/logout', [AuthController::class, 'logout']);
