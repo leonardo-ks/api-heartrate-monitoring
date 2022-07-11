@@ -140,7 +140,7 @@ class AuthController extends Controller
     public function search($name) {
         $user = User::where('name', 'like', '%'.$name.'%')->get();
         if(count($user) > 0) {
-            return response()->json(['success' => true, "message" => "Success", "user" => $user]);
+            return response()->json(['success' => true, "message" => "Success", "data" => $user]);
         }
     }
 }
