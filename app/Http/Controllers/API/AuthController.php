@@ -134,7 +134,7 @@ class AuthController extends Controller
         foreach($contact_arr as $contact) {
             array_push($data, User::whereId($contact)->get());
         }
-        return response()->json(['success' => true, "message" => "Success", "data" => json_encode($data)]);
+        return response()->json(['success' => true, "message" => "Success", $data]);
     }
 
     public function search($name) {
