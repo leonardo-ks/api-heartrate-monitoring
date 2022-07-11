@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Carbon;
 
 class DataResource extends JsonResource
 {
@@ -21,8 +22,8 @@ class DataResource extends JsonResource
             'step_changes' => intval($this->step_changes),
             'step' => intval($this->step),
             'label' => $this->label,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'created_at' => Carbon::parse($this->created_at)->format('Y-m-d H:m:s'),
+            'updated_at' => Carbon::parse($this->updated_at)->format('Y-m-d H:m:s')
         ];
     }
 }
