@@ -33,6 +33,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/average', [DataController::class, 'getAverage']);
     Route::get('/data/{start}/{end}', [DataController::class, 'getDataByDate']);
     Route::get('/limit/{start}/{end}', [DataController::class, 'getLimit']);
+    Route::get('/contact', [AuthController::class, 'getContactList']);
     Route::put('/update-user', [AuthController::class, 'update']);
     Route::post('/add-contact', [AuthController::class, 'addContact']);
     Route::post('/change-password', [AuthController::class, 'updatePassword']);
