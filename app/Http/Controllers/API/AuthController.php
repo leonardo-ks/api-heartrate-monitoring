@@ -130,10 +130,11 @@ class AuthController extends Controller
     public function getContactList() {
         $contacts = auth()->user()->contacts;
         $contact_arr = preg_split("/\,/", $contacts);
+        $data = [];
         foreach($contact_arr as $contact) {
-            $data = User::where("id", "=", $contact)->get();
+            array_push($data, User::whereId($contact)->get());
         }
-        return response()->json(['success' => true, "message" => "Success", "data" => $data]);
+        return response()->json(['success' => true, "message" => "Success", "data" => $data[0]]);
     }
 
     public function search($name) {
