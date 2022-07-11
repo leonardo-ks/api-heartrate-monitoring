@@ -23,8 +23,8 @@ class UserResource extends JsonResource
             'profile' => $this->profile,
             'dob' => $this->dob,
             'gender' => $this->gender,
-            'created_at' => Carbon::parse($this->created_at),
-            'updated_at' => Carbon::parse($this->updated_at)
+            'created_at' => Carbon::parse($this->created_at)->format('DD-MM-Y HH:mm'),
+            'updated_at' => Carbon::parse($this->updated_at)->format('DD-MM-Y HH:mm')
         ];
     }
 }
