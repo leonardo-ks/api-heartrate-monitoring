@@ -139,7 +139,7 @@ class AuthController extends Controller
         $contacts = auth()->user()->contacts;
 
         $contact_arr = preg_split("/\,/", $contacts);
-        $contacts = array_diff($contact_arr, [$request->contact]);
+        $contacts = join("", array_diff($contact_arr, [$request->contact]));
 
         User::whereId(auth()->user()->id)->update([
             'contacts' => $contacts
