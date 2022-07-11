@@ -127,6 +127,27 @@ class AuthController extends Controller
         return response()->json(['success' => true, "message" => "Kontak berhasil ditambahkan"]);
     }
 
+    public function deleteContact(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'contact' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+
+        $contacts = auth()->user()->contacts;
+
+        $contact_arr = preg_split("/\,/", $contacts);
+        $contacts = array_diff($contact_arr, [$request->contact]);
+
+        User::whereId(auth()->user()->id)->update([
+            'contacts' => $contacts
+        ]);
+
+        return response()->json(['success' => true, "message" => "Kontak berhasil dihapus"]);
+    }
+
     public function getContactList() {
         $contacts = auth()->user()->contacts;
         $contact_arr = preg_split("/\,/", $contacts);
