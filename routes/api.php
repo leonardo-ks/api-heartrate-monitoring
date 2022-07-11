@@ -30,8 +30,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
     Route::resource('data', DataController::class);
     Route::get('/search/{name}', [AuthController::class, 'search']);
-    Route::get('/average', [DataController::class, 'average']);
-    Route::get('/data/{start}/{end}', [DataController::class, 'byDate']);
+    Route::get('/average', [DataController::class, 'getAverage']);
+    Route::get('/data/{start}/{end}', [DataController::class, 'getDataByDate']);
+    Route::get('/limit/{start}/{end}', [DataController::class, 'getLimit']);
     Route::put('/update-user', [AuthController::class, 'update']);
     Route::post('/add-contact', [AuthController::class, 'addContact']);
     Route::post('/change-password', [AuthController::class, 'updatePassword']);

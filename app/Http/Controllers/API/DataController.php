@@ -21,9 +21,14 @@ class DataController extends Controller
         return response()->json(['success' => true, 'message' => 'success', 'data' => DataResource::collection($data)]);
     }
 
-    public function byDate($start, $end){
+    public function getDataByDate($start, $end){
         $data = Data::where('user_id', auth()->user()->id)->whereBetween('created_at', [$start, $end])->latest()->get();
         return response()->json(['success' => true, 'message' => 'success', 'data' => DataResource::collection($data)]);
+    }
+
+    public function getLimit($start, $end){
+        $data = Data::where('user_id', auth()->user()->id)->whereBetween('created_at', [$start, $end])->latest()->get();
+        return response()->json(['success' => true, 'message' => 'success', 'lower' => intval($data->min('avg_heart_rate')), 'upper' => intval($data->max('avg_heart_rate'))]);
     }
 
     /**
@@ -83,7 +88,7 @@ class DataController extends Controller
         return response()->json(['success' => true, 'data' => new DataResource($data)]);
     }
 
-    public function average()
+    public function getAverage()
     {
         $data = Data::where('user_id', auth()->user()->id)->whereDate('created_at', Carbon::today());
         if (is_null($data)) {
