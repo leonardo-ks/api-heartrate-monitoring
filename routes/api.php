@@ -32,7 +32,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/search/{name}', [AuthController::class, 'search']);
     Route::get('/average', [DataController::class, 'getAverage']);
     Route::get('/data/{start}/{end}', [DataController::class, 'getDataByDate']);
-    Route::get('/limit/{start}/{end}', [DataController::class, 'getLimit']);
+    Route::get('/limit', [DataController::class, 'getLimit']);
     Route::get('/contact', [AuthController::class, 'getContactList']);
     Route::put('/update-user', [AuthController::class, 'update']);
     Route::post('/add-contact', [AuthController::class, 'addContact']);

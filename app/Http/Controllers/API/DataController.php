@@ -26,8 +26,8 @@ class DataController extends Controller
         return response()->json(['success' => true, 'message' => 'success', 'data' => DataResource::collection($data)]);
     }
 
-    public function getLimit($start, $end){
-        $data = Data::where('user_id', auth()->user()->id)->whereDate('created_at', Carbon::yesterday());
+    public function getLimit(){
+        $data = Data::where('user_id', auth()->user()->id)->whereDate('created_at', Carbon::yesterday())->where('avg_heart_rate', 'IS NOT NULL');
         return response()->json(['success' => true, 'message' => 'success', 'lower' => intval($data->min('avg_heart_rate')), 'upper' => intval($data->max('avg_heart_rate'))]);
     }
 
