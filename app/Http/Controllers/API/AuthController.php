@@ -70,7 +70,7 @@ class AuthController extends Controller
         }
 
         $user = User::where('id', auth()->user()->id);
-        $user->update(['name' => $request->name, 'email' => $request->email, 'gender' => $request->gender, 'dob' => $request->dob, 'profile' => 'https://ui-avatars.com/api/?name=' . urlencode($request->name) . '&background=7F9CF5&color=EBF4FF']);
+        $user->update(['name' => $request->name, 'email' => $request->email, 'gender' => $request->gender, 'dob' => $request->dob, 'profile' => 'https://ui-avatars.com/api/?name=' . urlencode($request->name) . '&background=7F9CF5&color=EBF4FF', 'height' => $request->height, 'weight'=> $request->weight]);
 
         return response()->json(['success' => true, 'message' => 'Change created', 'data' => new UserResource($user->first())]);
     }
