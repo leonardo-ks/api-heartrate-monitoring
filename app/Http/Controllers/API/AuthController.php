@@ -153,7 +153,9 @@ class AuthController extends Controller
         $contact_arr = preg_split("/\,/", $contacts);
         $data = array();
         foreach($contact_arr as $contact) {
-            array_push($data, User::whereId($contact)->first());
+            if ($contact != null) {
+                array_push($data, User::whereId($contact)->first());
+            }
         }
         return response()->json(['success' => true, "message" => "Success", "data" => $data]);
     }
