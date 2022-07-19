@@ -42,7 +42,6 @@ class NotificationController extends Controller
         }
 
         $decoded = json_decode($response->getBody()->getContents(), true);
-        dd($name);
 
         if(array_key_exists("message_id",$decoded)) {
             return response()->json(['success' => true]);
