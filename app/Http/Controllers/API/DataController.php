@@ -32,8 +32,8 @@ class DataController extends Controller
     }
 
     public function getLimit(){
-        $still = Data::where('user_id', auth()->user()->id)->where('step_changes', 0)->where('avg_heart_rate', '>', 40)->whereNotNull('label');
-        $walk = Data::where('user_id', auth()->user()->id)->where('step_changes', '>', 0)->whereNotNull('label');
+        $still = Data::where('user_id', auth()->user()->id)->where('step_changes', 0)->where('avg_heart_rate', '>', 40)->where('label', 'Normal');
+        $walk = Data::where('user_id', auth()->user()->id)->where('step_changes', '>', 0)->where('label', 'Normal');
         return response()->json(['success' => true, 'message' => 'success', 'lower' => intval($still->min('avg_heart_rate')), 'upperStill' => intval($still->max('avg_heart_rate')), 'upperWalk' => intval($walk->max('avg_heart_rate'))]);
     }
 
