@@ -26,6 +26,11 @@ class DataController extends Controller
         return response()->json(['success' => true, 'message' => 'success', 'data' => DataResource::collection($data)]);
     }
 
+    public function getDataByDateById($id, $start, $end){
+        $data = Data::where('user_id', $id)->whereBetween('created_at', [$start, $end])->latest()->get();
+        return response()->json(['success' => true, 'message' => 'success', 'data' => DataResource::collection($data)]);
+    }
+
     public function getLimit(){
         $still = Data::where('user_id', auth()->user()->id)->where('step_changes', 0)->where('avg_heart_rate', '>', 40)->whereNotNull('label');
         $walk = Data::where('user_id', auth()->user()->id)->where('step_changes', '>', 0)->whereNotNull('label');
