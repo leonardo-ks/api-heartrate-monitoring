@@ -31,6 +31,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('data', DataController::class);
     Route::get('/search/{name}', [AuthController::class, 'search']);
     Route::get('/average', [DataController::class, 'getAverage']);
+    Route::get('/average/{id}', [DataController::class, 'getAverageById']);
     Route::get('/data/{start}/{end}', [DataController::class, 'getDataByDate']);
     Route::get('/data/{id}/{start}/{end}', [DataController::class, 'getDataByDateById']);
     Route::get('/limit', [DataController::class, 'getLimit']);

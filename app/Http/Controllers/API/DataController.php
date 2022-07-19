@@ -103,6 +103,15 @@ class DataController extends Controller
         return response()->json(['success' => true, 'message' => 'success', 'today_steps'=> intval($data->max('step')), 'avg_heart_rate'=> intval($data->avg('avg_heart_rate'))]);
     }
 
+    public function getaverageById($id)
+    {
+        $data = Data::where('user_id', $id)->whereDate('created_at', Carbon::today());
+        if (is_null($data)) {
+            return response()->json(['success' => false, 'message' => 'Data not found'], 404);
+        }
+        return response()->json(['success' => true, 'message' => 'success', 'today_steps'=> intval($data->max('step')), 'avg_heart_rate'=> intval($data->avg('avg_heart_rate'))]);
+    }
+
     public function findData(Request $request)
     {
         $data = Data::where('avg_heart_rate', $request->step_changes)->where('step_changes', $request->step_changes);
