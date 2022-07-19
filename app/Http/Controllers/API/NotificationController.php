@@ -37,7 +37,6 @@ class NotificationController extends Controller
                 'data' => [
                     'title' => 'Perhatian',
                     'message' => $message,
-                    // 'status' => strval($request->status)
                 ]
             ]);
         }
