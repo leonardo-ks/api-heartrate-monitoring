@@ -36,7 +36,8 @@ class NotificationController extends Controller
                 'to' => '/topics/hrmadmin' . strtolower($name),
                 'data' => [
                     'title' => 'Perhatian',
-                    'message' => $message
+                    'message' => $message,
+                    'status' => strval($request->status)
                 ]
             ]);
         }
