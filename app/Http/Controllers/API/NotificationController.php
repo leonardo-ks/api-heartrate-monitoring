@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Actions\PushNotification;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -27,30 +26,28 @@ class NotificationController extends Controller
                 $message = "Detak jantung ". $name ." lebih tinggi saat bergerak";
             } else if($request->status == 4) {
                 $message = "Detak jantung ". $name ." lebih tinggi saat bergerak";
-            } else if($request->status == 5) {
+            } else {
                 $message = $name ." menekan tombol darurat, segera berikan tindakan!";
             }
-            $topics = '/topics/hrm' . strtolower($name);
-            $title = 'Perhatian!';
-            // $response = Http::withHeaders([
-            //     'Content-Type' => 'application/json',
-            //     'Authorization' => 'key=AAAA7NpuTF0:APA91bGoZNzN0veBBz6e9dX8BSGlOrbzlsmyoNLVQ4SCm4m_bv7RYswZ38kzSWWi9VCtthYWIxWLaVHHRZmA41ypwt6YOX4AXx2OrKWzR5YZ3ELsy-RBOl4xRax0-80GqP0Yr66J8dPy'
-            // ])->post('https://fcm.googleapis.com/fcm/send', [
-            //     'to' => '/topics/hrm' . strtolower($name),
-            //     'data' => [
-            //         'title' => 'Perhatian',
-            //         'message' => $message,
-            //     ]
-            // ]);
-            PushNotification::handle($topics, $title, $message);
+            $response = Http::withHeaders([
+                'Content-Type' => 'application/json',
+                'Authorization' => 'key=AAAA7NpuTF0:APA91bGoZNzN0veBBz6e9dX8BSGlOrbzlsmyoNLVQ4SCm4m_bv7RYswZ38kzSWWi9VCtthYWIxWLaVHHRZmA41ypwt6YOX4AXx2OrKWzR5YZ3ELsy-RBOl4xRax0-80GqP0Yr66J8dPy'
+            ])->post('https://fcm.googleapis.com/fcm/send', [
+                'to' => '/topics/hrm' . strtolower($name),
+                'data' => [
+                    'title' => 'Perhatian',
+                    'message' => $message
+                ]
+            ]);
         }
 
-        // $decoded = json_decode($response->getBody()->getContents(), true);
+        $decoded = json_decode($response->getBody()->getContents(), true);
+        dd($decoded);
 
-        // if(array_key_exists("message_id",$decoded)) {
+        if(array_key_exists("message_id",$decoded)) {
             return response()->json(['success' => true]);
-        // } else {
-        //     return response()->json(['success' => false]);
-        // }
+        } else {
+            return response()->json(['success' => false]);
+        }
     }
 }
