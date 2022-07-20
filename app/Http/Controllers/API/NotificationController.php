@@ -17,6 +17,7 @@ class NotificationController extends Controller
         foreach($contact_arr as $contact) {
             $data = User::where('id', (int)$contact)->first();
             $name = $data->name ?? null;
+            $vibrate = var_export($request->vibrate, true);;
             $message = "";
             if ($request->status == 1) {
                 $message = "Detak jantung ". $name ." terdeteksi lebih tinggi walaupun tidak bergerak";
@@ -33,10 +34,11 @@ class NotificationController extends Controller
                 'Content-Type' => 'application/json',
                 'Authorization' => 'key=AAAA7NpuTF0:APA91bGoZNzN0veBBz6e9dX8BSGlOrbzlsmyoNLVQ4SCm4m_bv7RYswZ38kzSWWi9VCtthYWIxWLaVHHRZmA41ypwt6YOX4AXx2OrKWzR5YZ3ELsy-RBOl4xRax0-80GqP0Yr66J8dPy'
             ])->post('https://fcm.googleapis.com/fcm/send', [
-                'to' => '/topics/hrm' . strtolower($name),
+                'to' => '/topics/hrmtest',
                 'data' => [
                     'title' => 'Perhatian',
-                    'message' => $message
+                    'message' => $message,
+                    'vibrate' => $vibrate
                 ]
             ]);
         }
