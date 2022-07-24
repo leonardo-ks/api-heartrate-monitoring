@@ -39,7 +39,7 @@ class NotificationController extends Controller
                     'title' => 'Perhatian',
                     'message' => $message,
                     'vibrate' => $vibrate,
-                    'status' => strval($request->status)
+                    'status' => $request->status
                 ]
             ]);
         }
