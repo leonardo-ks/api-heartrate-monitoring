@@ -36,9 +36,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/data/{id}/{start}/{end}', [DataController::class, 'getDataByDateById']);
     Route::get('/limit', [DataController::class, 'getLimit']);
     Route::get('/contact', [AuthController::class, 'getContactList']);
+    Route::get('/contact/pending', [AuthController::class, 'getPendingContactList']);
     Route::put('/update-user', [AuthController::class, 'update']);
     Route::post('/add-contact', [AuthController::class, 'addContact']);
     Route::post('/delete-contact', [AuthController::class, 'deleteContact']);
+    Route::post('/delete-contact/pending', [AuthController::class, 'deletePendingContact']);
     Route::post('/change-password', [AuthController::class, 'updatePassword']);
     Route::post('/find-data', [DataController::class, 'findData']);
     Route::post('/logout', [AuthController::class, 'logout']);
