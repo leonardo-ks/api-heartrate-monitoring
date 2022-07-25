@@ -140,14 +140,14 @@ class AuthController extends Controller
 
         $contact_arr = preg_split("/\,/", $contacts);
         foreach($contact_arr as $contact) {
-            if ($contact == $request->contact) {
+            if ($contact == auth()->user()->id) {
                 return response()->json(['success' => false, "message" => "Kontak sudah didaftarkan"]);
             }
         }
         if ($contacts != null) {
-            $contacts = $contacts . "," . $request->contact;
+            $contacts = $contacts . "," . auth()->user()->id;
         } else {
-            $contacts = $request->contact;
+            $contacts = auth()->user()->id;
         }
 
         User::whereId($request->contact)->update([
