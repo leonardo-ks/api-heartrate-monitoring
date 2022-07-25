@@ -17,7 +17,7 @@ class NotificationController extends Controller
         foreach($contact_arr as $contact) {
             $data = User::where('id', (int)$contact)->first();
             $name = $data->name ?? null;
-            $vibrate = var_export($request->vibrate, true);;
+            $vibrate = var_export($request->vibrate, true);
             $message = "";
             if ($request->status == 1) {
                 $message = "Detak jantung ". $name ." terdeteksi lebih tinggi walaupun tidak bergerak";

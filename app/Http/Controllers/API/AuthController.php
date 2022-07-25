@@ -148,6 +148,27 @@ class AuthController extends Controller
         return response()->json(['success' => true, "message" => "Kontak berhasil dihapus"]);
     }
 
+    public function deletePendingContact(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'contact' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors());
+        }
+
+        $contacts = auth()->user()->contacts;
+
+        $contact_arr = preg_split("/\,/", $contacts);
+        $contacts = join(",", array_diff($contact_arr, [$request->contact]));
+
+        User::whereId(auth()->user()->id)->update([
+            'pending_contacts' => $contacts
+        ]);
+
+        return response()->json(['success' => true, "message" => "Kontak berhasil dihapus"]);
+    }
+
     public function getContactList() {
         $contacts = auth()->user()->contacts;
         $contact_arr = preg_split("/\,/", $contacts);
@@ -155,6 +176,18 @@ class AuthController extends Controller
         foreach($contact_arr as $contact) {
             if ($contact != null) {
                 array_push($data, User::whereId($contact)->first());
+            }
+        }
+        return response()->json(['success' => true, "message" => "Success", "data" => $data]);
+    }
+
+    public function getPendingContactList() {
+        $pending_contacts = auth()->user()->pending_contacts;
+        $pending_contact_arr = preg_split("/\,/", $pending_contacts);
+        $data = array();
+        foreach($pending_contact_arr as $pending_contact) {
+            if ($pending_contact != null) {
+                array_push($data, User::whereId($pending_contact)->first());
             }
         }
         return response()->json(['success' => true, "message" => "Success", "data" => $data]);
