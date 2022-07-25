@@ -136,7 +136,7 @@ class AuthController extends Controller
             return response()->json($validator->errors());
         }
 
-        $contacts = User::whereId($request->contact)->pending_contacts;
+        $contacts = User::whereId($request->contact)->first()->pending_contacts;
 
         $contact_arr = preg_split("/\,/", $contacts);
         foreach($contact_arr as $contact) {
