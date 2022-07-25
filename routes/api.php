@@ -39,6 +39,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/contact/pending', [AuthController::class, 'getPendingContactList']);
     Route::put('/update-user', [AuthController::class, 'update']);
     Route::post('/add-contact', [AuthController::class, 'addContact']);
+    Route::post('/add-contact/pending', [AuthController::class, 'addPendingContact']);
     Route::post('/delete-contact', [AuthController::class, 'deleteContact']);
     Route::post('/delete-contact/pending', [AuthController::class, 'deletePendingContact']);
     Route::post('/change-password', [AuthController::class, 'updatePassword']);
