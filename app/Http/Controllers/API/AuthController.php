@@ -187,10 +187,10 @@ class AuthController extends Controller
             return response()->json($validator->errors());
         }
 
-        $contacts = auth()->user()->contacts;
+        $contacts = User::whereId($request->contact)->first()->pending_contacts;
 
         $contact_arr = preg_split("/\,/", $contacts);
-        $contacts = join(",", array_diff($contact_arr, [$request->contact]));
+        $contacts = join(",", array_diff($contact_arr, auth()->user()->id));
 
         User::whereId(auth()->user()->id)->update([
             'pending_contacts' => $contacts
